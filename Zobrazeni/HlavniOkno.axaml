@@ -1,0 +1,53 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2000/xaml"
+        xmlns:vm="using:Avalonia_MVVM_Aplikace_Kral_Friedl.ModelyZobrazeni"
+        x:Class="Avalonia_MVVM_Aplikace_Kral_Friedl.Zobrazeni.HlavniOkno"
+        x:DataType="vm:HlavniOknoViewModel"
+        Title="Evidence knih a filmů"
+        Width="850" Height="550"
+        WindowStartupLocation="CenterScreen"
+        Background="#1e1e1e" Foreground="White">
+
+    <Grid RowDefinitions="Auto, *, Auto" Margin="15">
+
+       <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Margin="0,0,0,15">
+          <TextBox Grid.Column="0"
+                     Watermark="Vyhledat podle názvu..."
+                     Text="{Binding SearchQuery, Mode=TwoWay}"
+                     Margin="0,0,10,0"
+                     Background="#2d2d2d" Foreground="White" BorderBrush="#3f3f3f"/>
+
+          <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding Zanry}"
+                      SelectedItem="{Binding SelectedGenreFilter, Mode=TwoWay}"
+                      Width="150" Margin="0,0,10,0"
+                      Background="#2d2d2d" Foreground="White"/>
+
+          <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="Filtr žánru" Foreground="#aaa" FontSize="12"/>
+       </Grid>
+
+       <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding FiltrovanePolozky}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  IsReadOnly="True"
+                  GridLinesVisibility="All"
+                  BorderThickness="1" BorderBrush="#3f3f3f"
+                  Background="#252526" RowBackground="#1e1e1e">
+          <DataGrid.Columns>
+             <DataGridTextColumn Header="Název" Binding="{Binding Nazev}" Width="*" />
+             <DataGridTextColumn Header="Žánr" Binding="{Binding Zanr}" Width="150" />
+             <DataGridTextColumn Header="Délka" Binding="{Binding Delka}" Width="100" />
+             <DataGridTextColumn Header="Hodnocení" Binding="{Binding Hodnoceni}" Width="100" />
+             <DataGridCheckBoxColumn Header="Přečteno" Binding="{Binding JePrecteno}" Width="100" />
+          </DataGrid.Columns>
+       </DataGrid>
+
+       <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0" Spacing="10">
+          <Button Content="Zobrazit detail" Click="Detail_Click" Background="#2d2d2d" Foreground="White" Padding="10,5"/>
+          <Button Content="Přidat nový" Click="Pridat_Click" Background="#007acc" Foreground="White" Padding="10,5" FontWeight="Bold"/>
+          <Button Content="Smazat" Command="{Binding SmazatPolozku}" Background="#a80000" Foreground="White" Padding="10,5"/>
+          <Button Content="Exportovat do TXT" Click="Export_Click" Background="#2d7d46" Foreground="White" Padding="10,5"/>
+       </StackPanel>
+
+    </Grid>
+</Window>
